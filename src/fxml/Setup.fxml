@@ -29,6 +29,6 @@
          </children>
       </Pane>
       <ImageView fitHeight="173.0" fitWidth="188.0" layoutX="14.0" layoutY="213.0" pickOnBounds="true" preserveRatio="true" />
-      <TextArea layoutX="14.0" layoutY="15.0" prefHeight="153.0" prefWidth="188.0" />
+      <TextArea editable="false" layoutX="14.0" layoutY="15.0" prefHeight="153.0" prefWidth="188.0" />
    </children>
 </AnchorPane>

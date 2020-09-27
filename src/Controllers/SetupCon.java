@@ -23,10 +23,14 @@ public class SetupCon {
 
         RWJsonUser.firstName = txtBoxFN.getText();
         RWJsonUser.lastName = txtBoxLN.getText();
-        RWJsonUser.sGrade = comboGrade.getSelectionModel().toString();
+        //RWJsonUser.sGrade = comboGrade.getSelectionModel().toString();
         RWJsonUser.sIsd = txtBoxISD.getText();
         RWJsonUser.getComputerName(false);
+        RWJsonUser.getOSVersion();
+        RWJsonUser.rootPathMaker();
+        RWJsonUser.jsonPathMaker("User");
         RWJsonUser.setupCom = "true";
+
         RWJsonUser.WriteToJson();
         RWJsonUser.ReadToJson();
 

@@ -11,14 +11,14 @@ import java.util.Map;
 public class RWJsonUser {
 
     // Might need to be static
-    public static String firstName;
-    public static String lastName;
-    public static String sGrade;
+    public static String firstName = null;
+    public static String lastName = null;
+    public static String sGrade = null;
     public int iGrade = Integer.parseInt(sGrade);
-    public static String sIsd;
+    public static String sIsd = null;
     public int iIsd = Integer.parseInt(sIsd);
-    public static String PCName;
-    public static String PCNAME;
+    public static String PCName = null;
+    public static String PCNAME= null;
     public static String setupCom = "false";
     public boolean bSetupCom = false;
 
