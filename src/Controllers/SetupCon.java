@@ -1,10 +1,17 @@
 package Controllers;
 
 import features.RWJsonUser;
+import javafx.beans.Observable;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,14 +23,24 @@ public class SetupCon {
 
     public TextField txtBoxFN;
     public TextField txtBoxLN;
-    public ChoiceBox comboGrade;
+    public ChoiceBox<String> comboGrade;
     public TextField txtBoxISD;
+
+    public void initialize() {
+        ObservableList<String> list = comboGrade.getItems();
+        list.add("9");
+        list.add("10");
+        list.add("11");
+        list.add("12");
+
+    }
+
 
     public void FinishedClicked(ActionEvent actionEvent) {
 
         RWJsonUser.firstName = txtBoxFN.getText();
         RWJsonUser.lastName = txtBoxLN.getText();
-        //RWJsonUser.sGrade = comboGrade.getSelectionModel().toString();
+        RWJsonUser.sGrade = comboGrade.getSelectionModel().toString();
         RWJsonUser.sIsd = txtBoxISD.getText();
         RWJsonUser.getComputerName(false);
         RWJsonUser.getOSVersion();
@@ -33,6 +50,17 @@ public class SetupCon {
 
         RWJsonUser.WriteToJson();
         RWJsonUser.ReadToJson();
+
+        try {
+            Parent home_page_parent = FXMLLoader.load(getClass().getResource("/fxml/Home.fxml"));
+            Scene home_page_scene = new Scene(home_page_parent);
+            Stage app_stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            app_stage.setScene(home_page_scene);
+            app_stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

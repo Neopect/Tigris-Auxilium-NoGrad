@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
@@ -17,7 +19,10 @@
                <children>
                   <Label layoutX="17.0" layoutY="104.0" text="Last Name" />
                   <TextField fx:id="txtBoxFN" layoutX="137.0" layoutY="39.0" />
-                  <TextField fx:id="txtBoxISD" layoutX="137.0" layoutY="246.0" />
+                  <TextField fx:id="txtBoxISD" layoutX="137.0" layoutY="246.0">
+                     <tooltip>
+                        <Tooltip text="School Code, EX. SHS = 720" />
+                     </tooltip></TextField>
                   <TextField fx:id="txtBoxLN" layoutX="138.0" layoutY="100.0" />
                   <Label layoutX="18.0" layoutY="43.0" prefHeight="17.0" prefWidth="68.0" text="First Name" />
                   <Label layoutX="18.0" layoutY="250.0" prefHeight="17.0" prefWidth="33.0" text="ISD" />
@@ -28,7 +33,10 @@
             </AnchorPane>
          </children>
       </Pane>
-      <ImageView fitHeight="173.0" fitWidth="188.0" layoutX="14.0" layoutY="213.0" pickOnBounds="true" preserveRatio="true" />
-      <TextArea editable="false" layoutX="14.0" layoutY="15.0" prefHeight="153.0" prefWidth="188.0" />
+      <ImageView fitHeight="173.0" fitWidth="188.0" layoutX="14.0" layoutY="213.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/photos/NPNLogo.png" />
+         </image></ImageView>
+      <TextArea editable="false" focusTraversable="false" layoutX="14.0" layoutY="15.0" prefHeight="153.0" prefWidth="188.0" text="Hello their, we just need you to fill a few things before we begain. This might not be important now but will be in the future" wrapText="true" />
    </children>
 </AnchorPane>
