@@ -731,24 +731,51 @@ ALL PRIVILEGES|neopect\_fun:null
 </ObjectGrants>
     </user>
     <table id="228" parent="4" name="Fun"/>
-    <column id="229" parent="228" name="ID">
+    <table id="229" parent="4" name="books"/>
+    <column id="230" parent="228" name="ID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="230" parent="228" name="Name">
+    <column id="231" parent="228" name="Name">
       <Position>2</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="231" parent="228" name="Value">
+    <column id="232" parent="228" name="Value">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="232" parent="228" name="PRIMARY">
+    <key id="233" parent="228" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="234" parent="229" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="235" parent="229" name="title">
+      <Position>2</Position>
+      <DataType>varchar(45)|0s</DataType>
+    </column>
+    <column id="236" parent="229" name="author">
+      <Position>3</Position>
+      <DataType>varchar(45)|0s</DataType>
+    </column>
+    <column id="237" parent="229" name="year">
+      <Position>4</Position>
+      <DataType>int(4)|0s</DataType>
+    </column>
+    <column id="238" parent="229" name="pages">
+      <Position>5</Position>
+      <DataType>int(6)|0s</DataType>
+    </column>
+    <key id="239" parent="229" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
   </database-model>
