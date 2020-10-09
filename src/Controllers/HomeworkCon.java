@@ -1,35 +1,39 @@
 package Controllers;
 
-import features.Books;
-import features.SqliteConnection;
+import features.tableCons.PPlanner;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.SQLException;
 
 public class HomeworkCon {
-    public Button btn1;
-    public TextField tfID;
-    public TextField tfTitle;
-    public TextField tfAuthor;
-    public TextField tfYear;
-    public TextField tfPages;
-    public TableView<Books> tbBooks;
-    public TableColumn<Books, Integer> colID;
-    public TableColumn<Books, String> colTitle;
-    public TableColumn<Books, String> colAuthor;
-    public TableColumn<Books, Integer> colYear;
-    public TableColumn<Books, Integer> colPages;
+    public TextField tfName;
+    public TextField tfDes;
+    public TextField tfStatus;
+    public TextField tfPri;
+    public TextField tfDueDate;
+    public TextField tfCat;
+    public TableView<PPlanner> tbPPlanner;
+    public TableColumn<PPlanner, String> colName;
+    public TableColumn<PPlanner, String> colDes;
+    public TableColumn<PPlanner, Integer> colStatus;
+    public TableColumn<PPlanner, Integer> colPri;
+    public TableColumn<PPlanner, String> colDue;
+    public TableColumn<PPlanner, Integer> colCat;
     public Button btnInsert;
     public Button btnUpdate;
     public Button btnDelete;
+    public ChoiceBox cbSearch;
+    public TextField tfpSearch;
 
     //Connection connection = null;
 
@@ -37,7 +41,11 @@ public class HomeworkCon {
         //SqliteConnection sqlConn = new SqliteConnection();
         //connection = sqlConn.dbConnector("ProjectPlanner");
 
-        showBooks();
+        showProject();
+
+        String st[] = {"Name", "Description", "Status", "priority", "Due Date", "Cat" }; //Add any later
+        cbSearch.getItems().addAll(st);
+
     }
 
     public void btn1Action(ActionEvent actionEvent) {
@@ -66,8 +74,8 @@ public class HomeworkCon {
     public Connection getConnection() {
         Connection conn;
         try{
-            conn = DriverManager.getConnection("jdbc:mysql://www.neopect.heliohost.org:3306/neopect_test", "neopect_neo", "TyPass01");
-            //conn = DriverManager.getConnection("jdbc:sqlite:C:/Test/TA/Data/ProjectPlanner.sqlite");
+            //conn = DriverManager.getConnection("jdbc:mysql://www.neopect.heliohost.org:3306/neopect_test", "neopect_neo", "TyPass01");
+            conn = DriverManager.getConnection("jdbc:sqlite:C:/Test/TA/Data/ProjectPlanner.sqlite"); //--------------------------------------------------
             return conn;
         }catch(Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -75,19 +83,19 @@ public class HomeworkCon {
         }
     }
 
-    public ObservableList<Books> getBooksList(){
-        ObservableList<Books> bookList = FXCollections.observableArrayList();
+    public ObservableList<PPlanner> getProjectList(){ //--------------------------------------------------
+        ObservableList<PPlanner> plannerList = FXCollections.observableArrayList();
         Connection conn = getConnection();
-        String query = "SELECT * FROM books";
+        String query = "select * from project";
         Statement st = null; //Use prepare statement for repetitive scripts
         ResultSet rs = null;
         try{
             st = conn.createStatement();
             rs = st.executeQuery(query);
-            Books books;
+            PPlanner pplanner;
             while(rs.next()) {
-                books = new Books(rs.getInt("id"), rs.getString("title"), rs.getString("author"), rs.getInt("year"), rs.getInt("pages"));
-                bookList.add(books);
+                pplanner = new PPlanner(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("status"), rs.getInt("priority"), rs.getString("dueDate"), rs.getInt("cat"));
+                plannerList.add(pplanner);
             }
 
         }catch(Exception e) {
@@ -118,38 +126,39 @@ public class HomeworkCon {
 
 
 
-        return bookList;
+        return plannerList;
     }
 
-    public void showBooks() {
-        ObservableList<Books> list = getBooksList();
+    public void showProject() { //--------------------------------------------------
+        ObservableList<PPlanner> list = getProjectList();
 
-        colID.setCellValueFactory(new PropertyValueFactory<Books, Integer>("id"));
-        colTitle.setCellValueFactory(new PropertyValueFactory<Books, String>("title"));
-        colAuthor.setCellValueFactory(new PropertyValueFactory<Books, String>("author"));
-        colYear.setCellValueFactory(new PropertyValueFactory<Books, Integer>("year"));
-        colPages.setCellValueFactory(new PropertyValueFactory<Books, Integer>("pages"));
+        colName.setCellValueFactory(new PropertyValueFactory<PPlanner, String>("name"));
+        colDes.setCellValueFactory(new PropertyValueFactory<PPlanner, String>("description"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<PPlanner, Integer>("status"));
+        colPri.setCellValueFactory(new PropertyValueFactory<PPlanner, Integer>("priority"));
+        colDue.setCellValueFactory(new PropertyValueFactory<PPlanner, String>("dueDate"));
+        colCat.setCellValueFactory(new PropertyValueFactory<PPlanner, Integer>("cat"));
 
-        tbBooks.setItems(list);
+        tbPPlanner.setItems(list);
 
     }
-
+    //left here, finish checking statements and fixing syntax//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void insertRecord() {
-        String query = "INSERT INTO books VALUES ("+ tfID.getText() + ",'" + tfTitle.getText() + "','" + tfAuthor.getText() + "'," + tfYear.getText() + "," + tfPages.getText() + ")";
+        String query = "INSERT INTO project (name,description,status,priority,dueDate,Cat) VALUES ('"+ tfName.getText() + "','" + tfDes.getText() + "'," + tfStatus.getText() + "," + tfPri.getText() + ",'" + tfDueDate.getText() + "',"+ tfCat.getText() + ")";
         executeQuery(query);
-        showBooks();
+        showProject();
     }
 
     private void updateRecord() {
-        String query = "UPDATE books SET title = '" + tfTitle.getText() + "', author = '" + tfAuthor.getText() + "', year = " + tfYear.getText() + ", pages = " + tfPages.getText() + " WHERE id = " + tfID.getText() + "";
+        String query = "UPDATE project SET name = '" + tfName.getText() + "', description = '" + tfDes.getText() + "', status = " + tfStatus.getText() + ", priority = " + tfPri.getText() + ", dueDate = '" + tfDueDate.getText() + "', cat = " + tfCat.getText() + " WHERE name = '" + tfName.getText() + "'";
         executeQuery(query);
-        showBooks();
+        showProject();
     }
 
     private void deleteRecord() {
-        String query = "DELETE FROM books WHERE id =" + tfID.getText() + "";
+        String query = "DELETE FROM project WHERE name = '" + tfName.getText() + "'";
         executeQuery(query);
-        showBooks();
+        showProject();
     }
 
     private void executeQuery(String query) {
@@ -188,14 +197,53 @@ public class HomeworkCon {
         }
     }
 
-    public void onMouseClickedPlanner(MouseEvent mouseEvent) {
-        Books book = tbBooks.getSelectionModel().getSelectedItem();
-        System.out.println("id: " + book.getId() + "  " + "title: " + book.getId());
-        tfID.setText(String.valueOf(book.getId()));
-        tfTitle.setText(book.getTitle());
-        tfAuthor.setText(book.getAuthor());
-        tfYear.setText(String.valueOf(book.getYear()));
-        tfPages.setText(String.valueOf(book.getPages()));
+    public void onMouseClickedPlanner(MouseEvent mouseEvent) { //--------------------------------------------------
+        PPlanner pplanner = tbPPlanner.getSelectionModel().getSelectedItem();
+        //System.out.println("id: " + pplanner.getId() + "  " + "title: " + pplanner.getName());
+        //tfName.setText(String.valueOf(pplanner.getId()));
+        tfName.setText(pplanner.getName());
+        tfDes.setText(pplanner.getDescription());
+        tfStatus.setText(String.valueOf(pplanner.getStatus()));
+        tfPri.setText(String.valueOf(pplanner.getPriority()));
+        tfDueDate.setText(pplanner.getDueDate());
+        tfCat.setText(String.valueOf(pplanner.getCat()));
+
+    }
+
+    public void ppSearchKeyReleased(KeyEvent keyEvent) { // Work on later
+        String ser = "'%" + tfpSearch.getText() + "%'";
+        String selection = (String)cbSearch.getSelectionModel().getSelectedItem();
+
+        /*if(tfpSearch.getText() != "") {
+            String query = "select * from project WHERE " + selection + " LIKE " + ser;
+            System.out.println(query);
+            //executeQuery(query);
+            //showProject();
+            Connection conn = getConnection();
+
+            Statement st = null; //Use prepare statement for repetitive scripts
+            ResultSet rs = null;
+            try{
+                st = conn.createStatement();
+                rs = st.executeQuery(query);
+                PPlanner pplanner;
+                while(rs.next()) {
+                    pplanner = new PPlanner(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("status"), rs.getInt("priority"), rs.getString("dueDate"), rs.getInt("cat"));
+                    //plannerList.add(pplanner);
+                }
+
+            }catch(Exception e) {
+                e.printStackTrace();
+            }
+
+        }*/
+
 
     }
 }
+
+/*
+MySQL Syntax:
+    conn = DriverManager.getConnection("jdbc:mysql://www.neopect.heliohost.org:3306/neopect_test", "neopect_neo", "TyPass01");
+    "SELECT * FROM books"
+ */

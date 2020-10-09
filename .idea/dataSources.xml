@@ -7,13 +7,7 @@
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://www.neopect.heliohost.org:3306/neopect_test</jdbc-url>
     </data-source>
-    <data-source source="LOCAL" name="library@localhost" uuid="2eb972a1-d267-437d-94fb-03c109418ca1">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/library</jdbc-url>
-    </data-source>
-    <data-source source="LOCAL" name="SQLite - ProjectPlanner.sqlite" uuid="c5069649-68b1-4cd1-a6cc-13a833c7df6d">
+    <data-source source="LOCAL" name="ProjectPlanner.sqlite" uuid="912c1926-c5ab-4caf-9f51-31f0441932ea">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
